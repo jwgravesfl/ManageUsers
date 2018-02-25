@@ -28,6 +28,24 @@
     padding: 1rem 1rem !important;
   }
 
+  .footer-city {
+    height: 100% !important;
+    width: 15% !important;
+    padding: 1rem 1rem !important;
+  }
+
+  .footer-state {
+    height: 100% !important;
+    width: 15% !important;
+    padding: 1rem 1rem !important;
+  }
+
+  .footer-zip {
+    height: 100% !important;
+    width: 15% !important;
+    padding: 1rem 1rem !important;
+  }
+
   .footer-button {
     height: 100% !important;
     width: 10% !important;

@@ -1,10 +1,29 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { getUsers, saveUser, deleteUser } from './actions/UserActions';
-import { Field, reduxForm, reset } from 'redux-form';
-import _ from 'lodash';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { getUsers, saveUser, deleteUser } from './actions/UserActions'
+import { Field, reduxForm, reset } from 'redux-form'
+import _ from 'lodash'
 import './Styles/App.css'
+import styled from 'styled-components'
+import { Grid } from 'semantic-ui-react'
 
+
+const UserListDiv = styled.div `
+            .container {
+            font-family: sans-serif;
+            text-align: center;
+            padding-top: 2.5vh;
+            }
+        `;
+
+        const TitleDiv = styled.div `
+            .container {
+            font-family: sans-serif;
+            text-align: center;
+            font-size: 2em;
+            padding-top: 2.5vh;
+            }
+        `;
 
 
 class App extends Component {
@@ -15,23 +34,46 @@ class App extends Component {
   renderUsers() {
     return _.map(this.props.users, (user, key) => {
       return (
-        <div className="" key={key}>
-         
-          <h3 className="">
-            {user.firstName}
-          </h3>
-          <p className="">
-            {user.lastName}
-          </p>
-          <h3 className="">
-            {user.addressLine1}
-          </h3>
-          <h3 className="">
-            {user.addressLine2}
-          </h3>
-
-
-            <button className="btn btn-danger float-right" onClick={() => this.props.deleteUser(key)}>Delete</button>
+        <div>
+                    
+        <UserListDiv>
+          <div className="container" key={key}>
+            <Grid>
+            
+            <Grid.Column width={2}>
+                {user.id}
+              </Grid.Column>
+              <Grid.Column width={2}>
+                 {user.firstName}
+              </Grid.Column>
+              <Grid.Column width={2}>
+                {user.lastName}
+              </Grid.Column>
+              <Grid.Column width={4}>
+                <div>
+                  {user.addressLine1}
+                </div>
+                <div>
+                  {user.addressLine2}
+                </div>
+              </Grid.Column>
+              <Grid.Column width={1}>
+                {user.city}
+              </Grid.Column>
+              <Grid.Column width={1}>
+                {user.state}
+              </Grid.Column>
+              <Grid.Column width={1}>
+                {user.zip}
+              </Grid.Column>
+              <Grid.Column width={2}>
+              <button className="btn btn-danger float-right" onClick={() => this.props.editUser(key)}>Edit User</button>
+               <button className="btn btn-danger float-right" onClick={() => this.props.deleteUser(key)}>Delete</button>
+              </Grid.Column>
+              
+            </Grid>
+          </div>
+        </UserListDiv>
         </div>
       );
     });
@@ -52,10 +94,16 @@ class App extends Component {
     return (
       <div className="container">
         <div className="main">
+             <TitleDiv>
+              <div className="container">
+              Manage Users
+              </div>
+            </TitleDiv>
           {this.renderUsers()}
         </div>
         <div className="navbar fixed-bottom">
           <form onSubmit={handleSubmit(this.onSubmit.bind(this))} className="footerForm">
+            <div>
             <Field
               name="firstName"
               component={this.renderField}
@@ -80,7 +128,28 @@ class App extends Component {
               label="Address Line 2"
               class="footer-addressLine2"
             />
+            </div>
+            <div>
+            <Field
+              name="city"
+              component={this.renderField}
+              label="City"
+              class="footer-city"
+              />
+            <Field
+              name="state"
+              component={this.renderField}
+              label="State"
+              class="footer-state"
+            />
+            <Field
+              name="zip"
+              component={this.renderField}
+              label="Zip Code"
+              class="footer-zip"
+            />
             <button type="submit" className="btn footer-button">Create</button>
+            </div>
           </form>
         </div>
       </div>
