@@ -5,15 +5,23 @@ import { Field, reduxForm, reset } from 'redux-form'
 import _ from 'lodash'
 import './Styles/App.css'
 import styled from 'styled-components'
-import { Grid } from 'semantic-ui-react'
+import { Grid, Button, Icon } from 'semantic-ui-react'
+import UserListHeading from './components/UserListHeading'
 
 
 const UserListDiv = styled.div `
             .container {
-            font-family: sans-serif;
-            text-align: center;
-            padding-top: 2.5vh;
+              font-family: sans-serif;
+              text-align: center;
+              font-size: 3vh;
+              
+              }
+          
+
+            .button {
+              background-color: #4CAF50;
             }
+            
         `;
 
         const TitleDiv = styled.div `
@@ -21,10 +29,21 @@ const UserListDiv = styled.div `
             font-family: sans-serif;
             text-align: center;
             font-size: 2em;
-            padding-top: 2.5vh;
+            padding-top: 2vh;
+            padding-bottom: 2vh;
+            background-color: black;
+            color: white;
+            margin-bottom: 2vh;
             }
         `;
 
+        const FooterDiv = styled.div `
+            .container {
+            font-family: sans-serif;
+            text-align: center;
+            
+            }
+        `;
 
 class App extends Component {
   componentWillMount() {
@@ -37,19 +56,16 @@ class App extends Component {
         <div>
                     
         <UserListDiv>
-          <div className="container" key={key}>
+          <div className="container" key={key} index={key}>
             <Grid>
             
-            <Grid.Column width={2}>
-                {user.id}
-              </Grid.Column>
-              <Grid.Column width={2}>
+            <Grid.Column mobile={3} computer={2}>
                  {user.firstName}
               </Grid.Column>
-              <Grid.Column width={2}>
+              <Grid.Column mobile={3} computer={2}>
                 {user.lastName}
               </Grid.Column>
-              <Grid.Column width={4}>
+              <Grid.Column mobile={9} computer={4}>
                 <div>
                   {user.addressLine1}
                 </div>
@@ -57,18 +73,33 @@ class App extends Component {
                   {user.addressLine2}
                 </div>
               </Grid.Column>
-              <Grid.Column width={1}>
+              <Grid.Column mobile={3} computer={2}>
                 {user.city}
               </Grid.Column>
-              <Grid.Column width={1}>
+              <Grid.Column mobile={3} computer={1}>
                 {user.state}
               </Grid.Column>
-              <Grid.Column width={1}>
+              <Grid.Column mobile={3} computer={1}>
                 {user.zip}
               </Grid.Column>
-              <Grid.Column width={2}>
-              <button className="btn btn-danger float-right" onClick={() => this.props.editUser(key)}>Edit User</button>
-               <button className="btn btn-danger float-right" onClick={() => this.props.deleteUser(key)}>Delete</button>
+              <Grid.Column mobile={3} computer={2}>
+              <Button size='tiny' inverted color='blue' animated onClick={() => this.props.editUser(key)}>
+                <Button.Content hidden>Edit User</Button.Content>
+                <Button.Content visible>
+                  <Icon name='edit' />
+                </Button.Content>
+              </Button>
+              
+                  
+
+              </Grid.Column>
+              <Grid.Column mobile={3} computer={2}>
+              <Button size='tiny' inverted color='red' animated onClick={() => this.props.deleteUser(key)}>
+                <Button.Content hidden>Delete</Button.Content>
+                <Button.Content visible>
+                  <Icon name='trash' />
+                </Button.Content>
+              </Button>
               </Grid.Column>
               
             </Grid>
@@ -99,9 +130,11 @@ class App extends Component {
               Manage Users
               </div>
             </TitleDiv>
+            <UserListHeading />
           {this.renderUsers()}
         </div>
-        <div className="navbar fixed-bottom">
+        <FooterDiv>
+        <div className="fixed-bottom container">
           <form onSubmit={handleSubmit(this.onSubmit.bind(this))} className="footerForm">
             <div>
             <Field
@@ -152,6 +185,7 @@ class App extends Component {
             </div>
           </form>
         </div>
+        </FooterDiv>
       </div>
     );
   }
