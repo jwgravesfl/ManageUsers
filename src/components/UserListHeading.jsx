@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { Button, Form, Grid, Label } from 'semantic-ui-react'
+import { Grid } from 'semantic-ui-react'
 
 const MainDiv = styled.div `
             .container {
